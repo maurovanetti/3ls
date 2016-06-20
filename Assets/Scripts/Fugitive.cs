@@ -2,7 +2,8 @@
 using System.Collections;
 using System;
 
-public class Fugitive : MonoBehaviour {
+public class Fugitive : MonoBehaviour
+{
 
     public float speed;
     public Camp previousCamp;
@@ -11,14 +12,16 @@ public class Fugitive : MonoBehaviour {
     private Transform t;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         t = transform;
         Sky.GetSky().SetAlarm(Sky.SunshineTime + 1f, TakeDecision);
         camp = GetComponentInParent<Camp>();
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         if (t.localPosition.magnitude < speed)
         {
             t.localPosition = Vector3.zero;
@@ -27,13 +30,13 @@ public class Fugitive : MonoBehaviour {
         else
         {
             t.localPosition = t.localPosition.normalized * (t.localPosition.magnitude - speed);
-        }	
-	}
-    
+        }
+    }
+
     public void TakeDecision(float startTime)
     {
         previousCamp = camp;
-        
+
         // Rule #1
         if (previousCamp.neighbourhood.Count == 1)
         {
