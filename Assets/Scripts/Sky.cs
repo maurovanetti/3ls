@@ -100,6 +100,11 @@ public class Sky : MonoBehaviour
         SetAlphas(nightAlpha, sunshineFlareAlpha, dayAlpha, sunsetFlareAlpha);
     }
 
+    public void Freeze()
+    {
+        daysPerSecond = 0f;
+    }
+
     private void SetAlphas(float nightAlpha, float sunshineFlareAlpha, float dayAlpha, float sunsetFlareAlpha)
     {
         SetAlpha(nightSky, nightAlpha);

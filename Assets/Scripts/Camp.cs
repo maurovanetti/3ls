@@ -3,7 +3,8 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-public class Camp : MonoBehaviour {
+public class Camp : MonoBehaviour
+{
 
     public List<Camp> neighbourhood;
 
@@ -12,13 +13,16 @@ public class Camp : MonoBehaviour {
         get; private set;
     }
 
-    public bool VisitedByFugitive
+    public bool ChosenByEnemy
     {
         get; private set;
     }
 
+    private List<ImportantCharacter> visitors;
+
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         foreach (Camp neighbour in neighbourhood)
         {
             if (!neighbour.neighbourhood.Contains(this))
@@ -27,12 +31,14 @@ public class Camp : MonoBehaviour {
             }
             GetComponentInChildren<Star>().Connect(neighbour.GetComponentInChildren<Star>());
         }
+        visitors = new List<ImportantCharacter>();
     }
 
     // Update is called once per frame
-    void Update () {
-	
-	}
+    void Update()
+    {
+
+    }
 
     internal void UnselectIfNecessary(LuckyStar detachingLuckyStar)
     {
@@ -44,15 +50,37 @@ public class Camp : MonoBehaviour {
         }
     }
 
+    public bool IsVisitedBy(ImportantCharacter who)
+    {
+        return visitors.Contains(who);
+    }
+
     public void Select()
     {
         Selected = true;
         GetComponentInChildren<Fire>().on = true;
     }
 
-    public void Visit(Fugitive visitor)
+    public void SetChosenBy(ImportantCharacter who)
     {
-        VisitedByFugitive = true;
-        transform.Find("Fugitive Icon").gameObject.SetActive(true);
+        if (who is Enemy)
+        {
+            ChosenByEnemy = true;
+        }
+    }
+
+    public void Visit(ImportantCharacter visitor)
+    {
+
+        visitors.Add(visitor);
+        if (visitor is Enemy)
+        {
+            ChosenByEnemy = false;
+        }
+        else
+        {
+            transform.Find("Fugitive Icon").gameObject.SetActive(true);
+        }
+
     }
 }

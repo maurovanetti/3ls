@@ -2,38 +2,11 @@
 using System.Collections;
 using System;
 
-public class Fugitive : MonoBehaviour
+public class Fugitive : ImportantCharacter
 {
+    public float collisionDistance;
 
-    public float speed;
-    public Camp previousCamp;
-    public Camp camp;
-
-    private Transform t;
-
-    // Use this for initialization
-    void Start()
-    {
-        t = transform;
-        Sky.GetSky().SetAlarm(Sky.SunshineTime + 1f, TakeDecision);
-        camp = GetComponentInParent<Camp>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (t.localPosition.magnitude < speed)
-        {
-            t.localPosition = Vector3.zero;
-            camp.Visit(this);
-        }
-        else
-        {
-            t.localPosition = t.localPosition.normalized * (t.localPosition.magnitude - speed);
-        }
-    }
-
-    public void TakeDecision(float startTime)
+    public override void TakeDecision(float startTime)
     {
         previousCamp = camp;
 
@@ -47,7 +20,7 @@ public class Fugitive : MonoBehaviour
             // Rule #2
             foreach (Camp neighbour in previousCamp.neighbourhood)
             {
-                if (neighbour.Selected && !neighbour.VisitedByFugitive)
+                if (neighbour.Selected && !neighbour.IsVisitedBy(this))
                 {
                     if (camp == previousCamp) // first good option found
                     {
@@ -88,5 +61,26 @@ public class Fugitive : MonoBehaviour
             }
         }
         t.parent = camp.transform.Find("Resting Area");
+    }
+
+    protected override void CheckCollisions()
+    {
+        foreach (ImportantCharacter character in GetOtherCharacters())
+        {
+            if (character is Enemy)
+            {
+                if (character.camp == this.camp || (character.camp == this.previousCamp && this.camp == character.previousCamp))
+                {
+                    if (Vector2.Distance(t.position, character.transform.position) < collisionDistance)
+                    {
+                        this.StopMoving();
+                        character.StopMoving();
+                        Sky.GetSky().Freeze();
+                        Director.GetDirector().FugitiveCaptured((Enemy) character);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
