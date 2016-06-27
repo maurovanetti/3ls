@@ -845,6 +845,7 @@ MonoBehaviour:
   speed: 0.02
   previousCamp: {fileID: 0}
   camp: {fileID: 0}
+  collisionDistance: 1
 --- !u!212 &738328046
 SpriteRenderer:
   m_ObjectHideFlags: 0
