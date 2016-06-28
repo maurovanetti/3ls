@@ -19,7 +19,7 @@ public class Camp : MonoBehaviour
         get; private set;
     }
 
-    private List<ImportantCharacter> visitors;
+    private HashSet<ImportantCharacter> visitors;
 
 
     // Use this for initialization
@@ -33,7 +33,7 @@ public class Camp : MonoBehaviour
             }
             GetComponentInChildren<Star>().Connect(neighbour.GetComponentInChildren<Star>());
         }
-        visitors = new List<ImportantCharacter>();
+        visitors = new HashSet<ImportantCharacter>();
         RaycastHit hit;
         Ray ray = new Ray(Camera.main.transform.position, transform.position - Camera.main.transform.position);
         Debug.DrawRay(Camera.main.transform.position, transform.position - Camera.main.transform.position, Color.green, 1.0f);
@@ -87,10 +87,7 @@ public class Camp : MonoBehaviour
         {
             ChosenByEnemy = false;
         }
-        else
-        {
-            transform.Find("Fugitive Icon").gameObject.SetActive(true);
-        }
+        transform.Find(visitor.iconName).gameObject.SetActive(true);
 
     }
 }

@@ -6,10 +6,12 @@ public abstract class ImportantCharacter : MonoBehaviour
     public float delayAfterSunshine;
     public float speed;
     public Camp previousCamp;
-    public Camp camp;    
+    public Camp camp;
+    public string iconName;
 
     protected Transform t;
     private List<ImportantCharacter> otherCharacters; // cache
+    
 
     // Use this for initialization
     void Start()
