@@ -39,7 +39,6 @@ public class Camp : MonoBehaviour
         Debug.DrawRay(Camera.main.transform.position, transform.position - Camera.main.transform.position, Color.green, 1.0f);
         if (Physics.Raycast(ray, out hit, 100f))
         {
-            Debug.Log(this.gameObject + " ---> " + hit.point);
             transform.Find(RestingAreaName).transform.position = hit.point;
         }
     }

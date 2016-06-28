@@ -532,6 +532,7 @@ MonoBehaviour:
   speed: 0.15
   previousCamp: {fileID: 0}
   camp: {fileID: 0}
+  iconName: Black Icon
 --- !u!212 &194508319
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2231,6 +2232,7 @@ MonoBehaviour:
   speed: 0.1
   previousCamp: {fileID: 0}
   camp: {fileID: 0}
+  iconName: Fugitive Icon
   collisionDistance: 1
 --- !u!212 &738328046
 SpriteRenderer:
@@ -9007,6 +9009,7 @@ MonoBehaviour:
   speed: 0.15
   previousCamp: {fileID: 0}
   camp: {fileID: 0}
+  iconName: Green Icon
 --- !u!212 &2065815810
 SpriteRenderer:
   m_ObjectHideFlags: 0
