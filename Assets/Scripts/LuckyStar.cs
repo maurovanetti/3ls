@@ -40,7 +40,7 @@ public class LuckyStar : MonoBehaviour {
         if (dragged)
         {
             Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = 10f;
+            mousePosition.z = -Camera.main.transform.position.z;
             Vector3 dragTo = Camera.main.ScreenToWorldPoint(mousePosition);
             dragTo.z = t.position.z;
             t.position = dragTo;
