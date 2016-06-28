@@ -38,7 +38,7 @@ public abstract class ImportantCharacter : MonoBehaviour
 
     protected void Choose()
     {
-        t.parent = camp.transform.Find("Resting Area");
+        t.parent = camp.transform.Find(Camp.RestingAreaName);
         camp.SetChosenBy(this);
     }
 

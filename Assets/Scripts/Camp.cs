@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class Camp : MonoBehaviour
 {
+    public static readonly string RestingAreaName = "Resting Area";
 
     public List<Camp> neighbourhood;
 
@@ -20,6 +21,7 @@ public class Camp : MonoBehaviour
 
     private List<ImportantCharacter> visitors;
 
+
     // Use this for initialization
     void Start()
     {
@@ -32,6 +34,14 @@ public class Camp : MonoBehaviour
             GetComponentInChildren<Star>().Connect(neighbour.GetComponentInChildren<Star>());
         }
         visitors = new List<ImportantCharacter>();
+        RaycastHit hit;
+        Ray ray = new Ray(Camera.main.transform.position, transform.position - Camera.main.transform.position);
+        Debug.DrawRay(Camera.main.transform.position, transform.position - Camera.main.transform.position, Color.green, 1.0f);
+        if (Physics.Raycast(ray, out hit, 100f))
+        {
+            Debug.Log(this.gameObject + " ---> " + hit.point);
+            transform.Find(RestingAreaName).transform.position = hit.point;
+        }
     }
 
     // Update is called once per frame
