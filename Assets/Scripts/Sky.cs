@@ -16,6 +16,11 @@ public class Sky : MonoBehaviour
     public float whatTimeIsIt;
     public float daysPerSecond;
 
+    public GameObject sun;
+    private Light sunLight;
+    private float maxSunLightIntensity;
+    public float nightLightIntensity; // as percentage of maxSunLightIntensity
+
     private float whatTimeWasIt;
     private Dictionary<float, List<Alarm>> alarms = new Dictionary<float, List<Alarm>>();
 
@@ -36,6 +41,8 @@ public class Sky : MonoBehaviour
         dawnEnd = SunshineTime + TwilightDuration;
         duskStart = SunsetTime - TwilightDuration;
         duskEnd = SunsetTime + TwilightDuration;
+        sunLight = sun.GetComponent<Light>();
+        maxSunLightIntensity = sunLight.intensity;
     }
 
     // Update is called once per frame
@@ -87,14 +94,34 @@ public class Sky : MonoBehaviour
             nightAlpha = 1.0f;
         }
 
-        // Twilight flares
+        // Sunlight & twilight flares
         if (whatTimeIsIt > dawnStart && whatTimeIsIt < dawnEnd)
         {
-            sunshineFlareAlpha = Mathf.Lerp(1.0f, 0f, Mathf.Abs(whatTimeIsIt - SunshineTime) / TwilightDuration);
+            float dawnFactor = (whatTimeIsIt - SunshineTime) / TwilightDuration;
+            sunshineFlareAlpha = Mathf.Lerp(1.0f, 0f, Mathf.Abs(dawnFactor));
+            sunLight.intensity = Mathf.Lerp(maxSunLightIntensity * nightLightIntensity, maxSunLightIntensity, dawnFactor);
         }
         else if (whatTimeIsIt > duskStart && whatTimeIsIt < duskEnd)
         {
-            sunsetFlareAlpha = Mathf.Lerp(1.0f, 0f, Mathf.Abs(whatTimeIsIt - SunsetTime) / TwilightDuration);
+            float duskFactor = (whatTimeIsIt - SunsetTime) / TwilightDuration;
+            sunsetFlareAlpha = Mathf.Lerp(1.0f, 0f, Mathf.Abs(duskFactor));
+            sunLight.intensity = Mathf.Lerp(maxSunLightIntensity, maxSunLightIntensity * nightLightIntensity, duskFactor);
+        }
+        else if (whatTimeIsIt <= dawnStart || whatTimeIsIt >= duskEnd)
+        {
+            sunLight.intensity = maxSunLightIntensity * nightLightIntensity;
+        }
+        else
+        {
+            sunLight.intensity = maxSunLightIntensity;
+        }
+
+        // Sun rotation
+        if (whatTimeIsIt > SunshineTime && whatTimeIsIt < SunsetTime)
+        {            
+            Vector3 rotation = sun.transform.rotation.eulerAngles;
+            rotation.y = Mathf.Lerp(0f, 360f, (whatTimeIsIt - SunshineTime) / (SunsetTime - SunshineTime));
+            sun.transform.rotation = Quaternion.Euler(rotation);
         }
 
         SetAlphas(nightAlpha, sunshineFlareAlpha, dayAlpha, sunsetFlareAlpha);

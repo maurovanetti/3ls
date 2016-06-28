@@ -44,3 +44,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Lucky Star
+    uniqueID: 3186567793
+    locked: 0

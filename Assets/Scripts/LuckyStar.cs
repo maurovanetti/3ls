@@ -39,7 +39,9 @@ public class LuckyStar : MonoBehaviour {
 	void Update () {
         if (dragged)
         {
-            Vector3 dragTo = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition.z = 10f;
+            Vector3 dragTo = Camera.main.ScreenToWorldPoint(mousePosition);
             dragTo.z = t.position.z;
             t.position = dragTo;
         }
@@ -65,8 +67,8 @@ public class LuckyStar : MonoBehaviour {
         float minDistance = float.PositiveInfinity;
         GameObject closest = null;
         foreach (GameObject starObject in constellation) {
-            float distanceFromStarObject = Vector2.Distance(t.position, starObject.transform.position);
-            if (Vector2.Distance(t.position, starObject.transform.position) < minDistance)
+            float distanceFromStarObject = Vector3.Distance(t.position, starObject.transform.position);
+            if (Vector3.Distance(t.position, starObject.transform.position) < minDistance)
             {
                 closest = starObject;
                 minDistance = distanceFromStarObject;
