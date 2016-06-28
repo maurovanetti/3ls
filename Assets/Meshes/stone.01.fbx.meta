@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 248b5f227e678824b9423559f2b1551f
-timeCreated: 1467145822
+guid: 808a3c480b1e27e44a547a247e79daaa
+timeCreated: 1467134558
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: native
+    4300000: stone.01
   materials:
     importMaterials: 1
     materialName: 0
