@@ -528,6 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec91bbcd95fbfd4f8452188ae6d6a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  surname: Black
   delayAfterSunshine: 2
   speed: 0.15
   previousCamp: {fileID: 0}
@@ -2211,6 +2212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d47460cc4c4ea498194ae8fc3d98bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  surname: I
   delayAfterSunshine: 1
   speed: 0.1
   previousCamp: {fileID: 0}
@@ -9166,6 +9168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec91bbcd95fbfd4f8452188ae6d6a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  surname: Green
   delayAfterSunshine: 3
   speed: 0.15
   previousCamp: {fileID: 0}
