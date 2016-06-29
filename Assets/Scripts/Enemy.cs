@@ -27,22 +27,38 @@ public class Enemy : ImportantCharacter
             {
                 candidates.Add(neighbour);
             }
+            else
+            {
+                Director.GetDirector().Notify(Director.PlotEvent.EnemiesKeepSeparated, this);
+            }
         }
 
         // Rule #2
         if (candidates.Count == 1)
         {
             camp = candidates[0];
+            Director.GetDirector().Notify(Director.PlotEvent.EnemyOneChoice, this);
         }
         else
         {
             // Rule #3
-            candidates.Remove(previousPreviousCamp);
+            if (candidates.Remove(previousPreviousCamp))
+            {
+                Director.GetDirector().Notify(Director.PlotEvent.EnemiesDontWalkBack, this);
+            }
 
             // Rule #4
             List<Camp> unvisited = candidates.FindAll(candidate => !candidate.IsVisitedBy(this));
             if (unvisited.Count > 0) {
                 candidates = unvisited;
+                if (unvisited.Count == 1)
+                {
+                    Director.GetDirector().Notify(Director.PlotEvent.EnemyOneUnvisited, this);
+                }
+                else
+                {
+                    Director.GetDirector().Notify(Director.PlotEvent.EnemyUnvisited, this);
+                }
             }
 
             // Rule #5
@@ -50,6 +66,7 @@ public class Enemy : ImportantCharacter
             if (selected.Count > 0)
             {
                 candidates = selected;
+                Director.GetDirector().Notify(Director.PlotEvent.EnemyFires, this);
             }
         }
 
@@ -58,6 +75,10 @@ public class Enemy : ImportantCharacter
         {
             int i = UnityEngine.Random.Range(0, candidates.Count);
             camp = candidates[i];
+            if (candidates.Count > 1)
+            {
+                Director.GetDirector().Notify(Director.PlotEvent.EnemyRandomPick, this);
+            }
         }
 
         Choose();

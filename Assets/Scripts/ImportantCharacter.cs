@@ -3,11 +3,12 @@ using UnityEngine;
 
 public abstract class ImportantCharacter : MonoBehaviour
 {
+    public string surname;
     public float delayAfterSunshine;
     public float speed;
     public Camp previousCamp;
     public Camp camp;
-    public string iconName;
+    public string iconName;    
 
     protected Transform t;
     private List<ImportantCharacter> otherCharacters; // cache

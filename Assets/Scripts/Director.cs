@@ -12,7 +12,16 @@ public class Director : MonoBehaviour
         AllCampsVisitedByFugitive,
         AllCampsVisitedByEnemy,
         FugitiveUndecided,
-        FugitiveOneChoice
+        FugitiveOneChoice,
+        FugitiveOneUnvisitedFire,
+        FugitiveOneFire,
+        EnemiesKeepSeparated,
+        EnemyOneChoice,
+        EnemiesDontWalkBack,
+        EnemyUnvisited,
+        EnemyOneUnvisited,
+        EnemyFires,
+        EnemyRandomPick
     }
 
     public Text textAbove;
@@ -25,11 +34,15 @@ public class Director : MonoBehaviour
     {
         "They're after me.",
         "I should follow my lucky stars.",
-        "I am cold.",
+        "I must avoid them.",
+        "The stars show the path.",
+        "They follow the stars too!",
         "I am thirsty.",
+        "I am cold.",
         "I am hungry."
     };
-
+    private string lastMessageBelow;
+    private string secondLastMessageBelow;
 
     void Start()
     {
@@ -53,10 +66,15 @@ public class Director : MonoBehaviour
         return GameObject.Find("Director").GetComponent<Director>();
     }
 
-    public void Notify(PlotEvent plotEvent, ImportantCharacter enemy)
+    public void Notify(PlotEvent plotEvent, ImportantCharacter who)
     {
         Debug.Log("Notified plot event " + plotEvent.ToString());
-        recentNews.Add(plotEvent, enemy);
+        if (!recentNews.ContainsKey(plotEvent)  // first plot event of this kind
+            || UnityEngine.Random.value > 0.5f) // both enemies did that, pick one randomly
+        {
+            recentNews.Remove(plotEvent);
+            recentNews.Add(plotEvent, who);
+        }
     }
 
     private void HideMessageAbove(float timeOfTheDay)
@@ -76,23 +94,77 @@ public class Director : MonoBehaviour
             SetMessageAbove("GAME OVER");
         }
         else
-        {            
-            if (storyEpisode < story.Length)
-            {
-                SetMessageAbove(story[storyEpisode++]);
-            }
-            else
-            {
-                HideMessageAbove(timeOfTheDay);
-            }
+        {    
+            SetMessageAbove(story[storyEpisode++ % story.Length]);
         }
     }
 
     private void ShowMessageBelow(float timeOfTheDay)
     {
+        List<string> possibleMessages = new List<string>();
+
         if (IsHappened(PlotEvent.FugitiveUndecided))
         {
-            SetMessageBelow("I'm scared. Where should I go?");
+            possibleMessages.Add("I'm confused. Where should I go?");
+        }
+        if (IsHappened(PlotEvent.FugitiveOneChoice))
+        {
+            possibleMessages.Add("There's one path from here. No choice.");
+        }
+        if (IsHappened(PlotEvent.FugitiveOneUnvisitedFire))
+        {
+            possibleMessages.Add("That fire... I've never been there.");
+        }
+        if (IsHappened(PlotEvent.FugitiveOneFire))
+        {
+            possibleMessages.Add("I'll follow the fire.");
+        }
+
+        ImportantCharacter enemy;
+        if (WhoDid(PlotEvent.EnemyOneChoice, out enemy))
+        {
+            possibleMessages.Add(enemy.surname + " could only take that path.");
+        }
+        if (WhoDid(PlotEvent.EnemyOneUnvisited, out enemy))
+        {
+            possibleMessages.Add(enemy.surname + " had one new camp to explore.");
+        }
+        if (WhoDid(PlotEvent.EnemyFires, out enemy))
+        {
+            possibleMessages.Add(enemy.surname + " noticed the fire.");
+        }
+        if (WhoDid(PlotEvent.EnemyUnvisited, out enemy))
+        {
+            possibleMessages.Add(enemy.surname + " had new camps to explore.");
+        }
+        if (IsHappened(PlotEvent.EnemiesKeepSeparated))
+        {
+            possibleMessages.Add("Hmm, they always remain separated.");
+        }
+        if (IsHappened(PlotEvent.EnemiesDontWalkBack))
+        {
+            possibleMessages.Add("They don't walk back.");
+        }
+        if (IsHappened(PlotEvent.EnemyRandomPick))
+        {
+            possibleMessages.Add("They move whenever they can.");
+        }
+
+        if (possibleMessages.Count > 1)
+        {
+            possibleMessages.Remove(lastMessageBelow);
+        }
+        if (possibleMessages.Count > 1)
+        {
+            possibleMessages.Remove(secondLastMessageBelow);
+        }
+        if (possibleMessages.Count > 0)
+        {
+            SetMessageBelow(possibleMessages[0]);
+        }
+        else // it's very unlikely, perhaps impossible
+        {
+            HideMessageBelow(timeOfTheDay);
         }
         recentNews.Clear();
     }
@@ -104,6 +176,8 @@ public class Director : MonoBehaviour
 
     private void SetMessageBelow(string s)
     {
+        secondLastMessageBelow = lastMessageBelow;
+        lastMessageBelow = s;
         textBelow.text = s;
     }
 

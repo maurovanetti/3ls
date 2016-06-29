@@ -14,6 +14,7 @@ public class Fugitive : ImportantCharacter
         if (previousCamp.neighbourhood.Count == 1)
         {
             camp = previousCamp.neighbourhood[0];
+            Director.GetDirector().Notify(Director.PlotEvent.FugitiveOneChoice, this);
         }
         else
         {
@@ -33,8 +34,12 @@ public class Fugitive : ImportantCharacter
                 }
             }
             if (camp == null)
-            {
+            {                
                 camp = previousCamp;
+            }
+            else if (camp != previousCamp)
+            {
+                Director.GetDirector().Notify(Director.PlotEvent.FugitiveOneUnvisitedFire, this);
             }
 
             // Rule #3
@@ -57,6 +62,10 @@ public class Fugitive : ImportantCharacter
                 if (camp == null)
                 {
                     camp = previousCamp;
+                }
+                else if (camp != previousCamp)
+                {
+                    Director.GetDirector().Notify(Director.PlotEvent.FugitiveOneFire, this);
                 }
             }
         }
