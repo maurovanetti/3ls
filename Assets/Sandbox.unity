@@ -2203,7 +2203,7 @@ MonoBehaviour:
   previousCamp: {fileID: 0}
   camp: {fileID: 0}
   iconName: White Sphere
-  collisionDistance: 1
+  collisionDistance: 0.5
 --- !u!212 &738328046
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8241,7 +8241,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 249555a05b205a7488224f0d18d70fad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.9
+      value: -0.88
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 249555a05b205a7488224f0d18d70fad, type: 3}
       propertyPath: m_LocalPosition.y
