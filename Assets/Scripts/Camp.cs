@@ -86,7 +86,7 @@ public class Camp : MonoBehaviour
         {
             ChosenByEnemy = false;
         }
-        transform.Find(visitor.iconName).gameObject.SetActive(true);
+        transform.Find(RestingAreaName + "/" + visitor.iconName).gameObject.SetActive(true);
 
     }
 }
