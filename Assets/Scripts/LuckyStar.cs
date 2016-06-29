@@ -115,4 +115,10 @@ public class LuckyStar : RotatingStar {
     {
         SetDraggable(true);
     }
+
+    public static void Clear()
+    {
+        SetDraggable(true);
+        alarmsSet = false;
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Director : MonoBehaviour
@@ -43,9 +44,11 @@ public class Director : MonoBehaviour
     };
     private string lastMessageBelow;
     private string secondLastMessageBelow;
+    private bool gameOver;
 
     void Start()
     {
+        gameOver = false;
         storyEpisode = 0;
         recentNews = new Dictionary<PlotEvent, ImportantCharacter>();
         Sky.GetSky().SetAlarm(Sky.SunshineTime + 4f, ShowMessageBelow);
@@ -58,7 +61,10 @@ public class Director : MonoBehaviour
 
     void Update()
     {
-
+        if (gameOver && Input.GetMouseButtonDown(0))
+        {
+            SceneManager.LoadScene(0, LoadSceneMode.Single);
+        }
     }
 
     public static Director GetDirector()
@@ -92,6 +98,8 @@ public class Director : MonoBehaviour
         if (IsHappened(PlotEvent.FugitiveCaptured))
         {
             SetMessageAbove("GAME OVER");
+            gameOver = true;
+            LuckyStar.Clear();
         }
         else
         {    
