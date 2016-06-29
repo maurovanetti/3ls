@@ -2,27 +2,23 @@
 using System.Collections;
 using System;
 
-public class LuckyStar : MonoBehaviour {
+public class LuckyStar : RotatingStar {
 
     private static bool alarmsSet;
     private static bool draggable;
-    private static Texture2D hourglassCursorTexture;
-
-    public float degreesPerFrame;
-    private Vector3 rotationPerFrame;
+    private static Texture2D hourglassCursorTexture;    
     
     public float springStrength;
     private bool dragged;
-
-    private Transform t;
+    
     private Rigidbody2D rb;
     private GameObject[] constellation;
-
+    
     // Use this for initialization
-    void Start () {
-        t = transform;
+    new void Start()
+    {
+        base.Start();
         rb = GetComponent<Rigidbody2D>();
-        rotationPerFrame = new Vector3(0f, 0f, degreesPerFrame);
         constellation = GameObject.FindGameObjectsWithTag("Constellation");
         if (!alarmsSet)
         {
@@ -34,9 +30,9 @@ public class LuckyStar : MonoBehaviour {
         }
         GetComponentInParent<Camp>().Select();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    new void Update () {
         if (dragged)
         {
             Vector3 mousePosition = Input.mousePosition;
@@ -47,7 +43,7 @@ public class LuckyStar : MonoBehaviour {
         }
         else
         {
-            Spin();
+            base.Update();
             BeAttracted();
         }
 	}
@@ -83,12 +79,6 @@ public class LuckyStar : MonoBehaviour {
             SetDraggable(false);
         }
     }
-
-    private void Spin()
-    {        
-        t.Rotate(rotationPerFrame);
-    }
-    
 
     private void BeAttracted()
     {
