@@ -60,6 +60,11 @@ public class Fugitive : ImportantCharacter
                 }
             }
         }
+
+        if (camp == previousCamp)
+        {
+            Director.GetDirector().Notify(Director.PlotEvent.FugitiveUndecided, this);
+        }
         t.parent = camp.transform.Find("Resting Area");
     }
 
@@ -72,11 +77,11 @@ public class Fugitive : ImportantCharacter
                 if (character.camp == this.camp || (character.camp == this.previousCamp && this.camp == character.previousCamp))
                 {
                     if (Vector2.Distance(t.position, character.transform.position) < collisionDistance)
-                    {
+                    {                        
+                        Director.GetDirector().Notify(Director.PlotEvent.FugitiveCaptured, character);
                         this.StopMoving();
                         character.StopMoving();
                         Sky.GetSky().Freeze();
-                        Director.GetDirector().FugitiveCaptured((Enemy) character);
                         break;
                     }
                 }

@@ -23,6 +23,7 @@ public class Sky : MonoBehaviour
 
     private float whatTimeWasIt;
     private Dictionary<float, List<Alarm>> alarms = new Dictionary<float, List<Alarm>>();
+    List<Alarm> alarmsAtSkyFreeze = new List<Alarm>();
 
     private SpriteRenderer nightSky;
     private SpriteRenderer sunshineFlare;
@@ -130,7 +131,12 @@ public class Sky : MonoBehaviour
     public void Freeze()
     {
         daysPerSecond = 0f;
+        foreach (Alarm alarm in alarmsAtSkyFreeze)
+        {
+            alarm(whatTimeIsIt);
+        }
     }
+
 
     private void SetAlphas(float nightAlpha, float sunshineFlareAlpha, float dayAlpha, float sunsetFlareAlpha)
     {
@@ -157,6 +163,12 @@ public class Sky : MonoBehaviour
         alarmsAtThatTime.Add(alarm);
     }
 
+    public void SetAlarmAtSkyFreeze(Alarm alarm)
+    {
+        alarmsAtSkyFreeze.Add(alarm);
+    }
+
+
     public void UnsetAlarm(float atWhatTime, Alarm alarm)
     {
         if (alarms.ContainsKey(atWhatTime))
@@ -164,6 +176,11 @@ public class Sky : MonoBehaviour
             List<Alarm> alarmsAtThatTime = alarms[atWhatTime];
             alarmsAtThatTime.Remove(alarm);
         }
+    }
+
+    public void UnsetAlarmAtSkyFreeze(Alarm alarm)
+    {
+        alarmsAtSkyFreeze.Remove(alarm);
     }
 
     public static Sky GetSky()

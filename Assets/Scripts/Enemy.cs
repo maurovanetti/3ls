@@ -37,7 +37,7 @@ public class Enemy : ImportantCharacter
         else
         {
             // Rule #3
-            candidates.Remove(previousCamp);
+            candidates.Remove(previousPreviousCamp);
 
             // Rule #4
             List<Camp> unvisited = candidates.FindAll(candidate => !candidate.IsVisitedBy(this));

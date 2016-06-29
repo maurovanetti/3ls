@@ -33,7 +33,10 @@ public abstract class ImportantCharacter : MonoBehaviour
         {
             t.localPosition = t.localPosition.normalized * (t.localPosition.magnitude - speed);
         }
-        CheckCollisions();
+        if (speed > 0f)
+        {
+            CheckCollisions();
+        }
     }
 
     protected abstract void CheckCollisions();
