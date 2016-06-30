@@ -87,7 +87,7 @@ public class Fugitive : ImportantCharacter
                 {
                     if (Vector2.Distance(t.position, character.transform.position) < collisionDistance)
                     {                        
-                        Director.GetDirector().Notify(Director.PlotEvent.FugitiveCaptured, character);
+                        Director.GetDirector().Notify(Director.EndingEvent.FugitiveCaptured, character);
                         this.StopMoving();
                         character.StopMoving();
                         Sky.GetSky().Freeze();

@@ -9,8 +9,6 @@ public class Director : MonoBehaviour
 
     public enum PlotEvent
     {
-        FugitiveCaptured,
-        AllCampsVisitedByFugitive,
         AllCampsVisitedByEnemy,
         FugitiveUndecided,
         FugitiveOneChoice,
@@ -25,10 +23,17 @@ public class Director : MonoBehaviour
         EnemyRandomPick
     }
 
+    public enum EndingEvent
+    {
+        FugitiveCaptured,
+        AllCampsVisitedByFugitive
+    }
+
     public Text textAbove;
     public Text textBelow;
 
     private Dictionary<PlotEvent, ImportantCharacter> recentNews;
+    private Dictionary<EndingEvent, ImportantCharacter> bigNews;
     private int storyEpisode;
 
     private string[] story = new string[]
@@ -51,6 +56,7 @@ public class Director : MonoBehaviour
         gameOver = false;
         storyEpisode = 0;
         recentNews = new Dictionary<PlotEvent, ImportantCharacter>();
+        bigNews = new Dictionary<EndingEvent, ImportantCharacter>();
         Sky.GetSky().SetAlarm(Sky.SunshineTime + 4f, ShowMessageBelow);
         Sky.GetSky().SetAlarm(0f, HideMessageBelow);
         Sky.GetSky().SetAlarm(Sky.SunsetTime + (Sky.TwilightDuration / 2), ShowMessageAbove);
@@ -83,6 +89,15 @@ public class Director : MonoBehaviour
         }
     }
 
+    public void Notify(EndingEvent endingEvent, ImportantCharacter who)
+    {
+        Debug.Log("Notified ending event " + endingEvent.ToString());
+        if (!bigNews.ContainsKey(endingEvent))
+        {
+            bigNews.Add(endingEvent, who);
+        }
+    }
+
     private void HideMessageAbove(float timeOfTheDay)
     {
         textAbove.text = "";
@@ -95,9 +110,17 @@ public class Director : MonoBehaviour
 
     private void ShowMessageAbove(float timeOfTheDay)
     {
-        if (IsHappened(PlotEvent.FugitiveCaptured))
+        if (IsHappened(EndingEvent.FugitiveCaptured))
         {
             SetMessageAbove("GAME OVER");
+            SetMessageBelow("I'll sell my life dearly!");
+            gameOver = true;
+            LuckyStar.Clear();
+        }
+        else if (IsHappened(EndingEvent.AllCampsVisitedByFugitive))
+        {
+            SetMessageAbove("LEVEL COMPLETE");
+            SetMessageBelow("Thank you, lucky stars.");
             gameOver = true;
             LuckyStar.Clear();
         }
@@ -129,6 +152,10 @@ public class Director : MonoBehaviour
         }
 
         ImportantCharacter enemy;
+        if (WhoDid(PlotEvent.AllCampsVisitedByEnemy, out enemy))
+        {
+            possibleMessages.Add(enemy.surname + " has explored the whole area.");
+        }
         if (WhoDid(PlotEvent.EnemyOneChoice, out enemy))
         {
             possibleMessages.Add(enemy.surname + " could only take that path.");
@@ -187,6 +214,11 @@ public class Director : MonoBehaviour
         secondLastMessageBelow = lastMessageBelow;
         lastMessageBelow = s;
         textBelow.text = s;
+    }
+
+    private bool IsHappened(EndingEvent endingEvent)
+    {
+        return bigNews.ContainsKey(endingEvent);
     }
 
     private bool IsHappened(PlotEvent plotEvent)

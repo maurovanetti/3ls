@@ -41,6 +41,8 @@ public class Camp : MonoBehaviour
         {
             transform.Find(RestingAreaName).transform.position = hit.point;
         }
+        Sky sky = Sky.GetSky();
+        sky.SetAlarm(0f, ResetChosenByEnemy);
     }
 
     // Update is called once per frame
@@ -78,14 +80,15 @@ public class Camp : MonoBehaviour
         }
     }
 
+    private void ResetChosenByEnemy(float timeOfTheDay)
+    {
+        ChosenByEnemy = false;
+    }
+
     public void Visit(ImportantCharacter visitor)
     {
 
         visitors.Add(visitor);
-        if (visitor is Enemy)
-        {
-            ChosenByEnemy = false;
-        }
         transform.Find(RestingAreaName + "/" + visitor.iconName).gameObject.SetActive(true);
 
     }

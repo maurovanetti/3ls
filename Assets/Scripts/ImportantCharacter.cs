@@ -12,11 +12,14 @@ public abstract class ImportantCharacter : MonoBehaviour
 
     protected Transform t;
     private List<ImportantCharacter> otherCharacters; // cache
-    
+    private int campsToVisit;
+
 
     // Use this for initialization
     void Start()
     {
+        campsToVisit = GameObject.FindGameObjectsWithTag("Constellation").Length;
+        Debug.Log(campsToVisit + " camps to visit");
         t = transform;
         Sky.GetSky().SetAlarm(Sky.SunshineTime + delayAfterSunshine, TakeDecision);
         camp = GetComponentInParent<Camp>();
@@ -28,7 +31,26 @@ public abstract class ImportantCharacter : MonoBehaviour
         if (t.localPosition.magnitude < speed)
         {
             t.localPosition = Vector3.zero;
-            camp.Visit(this);
+            if (!camp.IsVisitedBy(this))
+            {
+                camp.Visit(this);
+                campsToVisit--;
+                if (campsToVisit == 0)
+                {
+                    if (this is Enemy)
+                    {
+                        Director.GetDirector().Notify(Director.PlotEvent.AllCampsVisitedByEnemy, this);
+                    }
+                    else
+                    {
+                        if (!camp.ChosenByEnemy)
+                        {
+                            Director.GetDirector().Notify(Director.EndingEvent.AllCampsVisitedByFugitive, this);
+                            Sky.GetSky().Freeze();
+                        }
+                    }
+                }
+            }
         }
         else
         {
