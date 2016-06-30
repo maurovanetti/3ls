@@ -38,7 +38,7 @@ public class LuckyStar : RotatingStar {
     new void Update () {
         if (byeBye)
         {
-            rb.gravityScale = -5f;
+            rb.gravityScale = -10f;
         }
         if (dragged)
         {
