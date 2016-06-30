@@ -144,7 +144,7 @@ public class Director : MonoBehaviour
         }
         if (IsHappened(PlotEvent.FugitiveOneUnvisitedFire))
         {
-            possibleMessages.Add("That fire... I've never been there.");
+            possibleMessages.Add("A fire... I've never been here.");
         }
         if (IsHappened(PlotEvent.FugitiveOneFire))
         {
@@ -166,7 +166,7 @@ public class Director : MonoBehaviour
         }
         if (WhoDid(PlotEvent.EnemyFires, out enemy))
         {
-            possibleMessages.Add(enemy.surname + " noticed the fire.");
+            possibleMessages.Add(enemy.surname + " noticed a fire.");
         }
         if (WhoDid(PlotEvent.EnemyUnvisited, out enemy))
         {
