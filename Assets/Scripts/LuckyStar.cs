@@ -6,6 +6,7 @@ public class LuckyStar : RotatingStar {
 
     private static bool alarmsSet;
     private static bool draggable;
+    private static bool byeBye;
     private static Texture2D hourglassCursorTexture;    
     
     public float springStrength;
@@ -13,12 +14,14 @@ public class LuckyStar : RotatingStar {
     
     private Rigidbody2D rb;
     private GameObject[] constellation;
-    
+
     // Use this for initialization
     new void Start()
     {
         base.Start();
+        byeBye = false;
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0f;
         constellation = GameObject.FindGameObjectsWithTag("Constellation");
         if (!alarmsSet)
         {
@@ -33,6 +36,10 @@ public class LuckyStar : RotatingStar {
 
     // Update is called once per frame
     new void Update () {
+        if (byeBye)
+        {
+            rb.gravityScale = -5f;
+        }
         if (dragged)
         {
             Vector3 mousePosition = Input.mousePosition;
@@ -120,5 +127,15 @@ public class LuckyStar : RotatingStar {
     {
         SetDraggable(true);
         alarmsSet = false;
+    }
+
+    public static void ByeBye()
+    {
+        byeBye = true;
+    }
+
+    public static void Wow()
+    {
+        wow = true;
     }
 }

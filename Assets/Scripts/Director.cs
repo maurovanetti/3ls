@@ -42,10 +42,15 @@ public class Director : MonoBehaviour
         "I should follow my lucky stars.",
         "I must avoid them.",
         "The stars show the path.",
+        "Black and Green: my enemies.",
         "They follow the stars too!",
-        "I am thirsty.",
+        "I lost my sense of direction.",
+        "I need to visit there too.",
+        "I am thirsty.",        
         "I am cold.",
-        "I am hungry."
+        "I could really use some water.",        
+        "I am hungry.",
+        "I'm clever and they are not."
     };
     private string lastMessageBelow;
     private string secondLastMessageBelow;
@@ -116,6 +121,7 @@ public class Director : MonoBehaviour
             SetMessageBelow("I'll sell my life dearly!");
             gameOver = true;
             LuckyStar.Clear();
+            LuckyStar.ByeBye();
         }
         else if (IsHappened(EndingEvent.AllCampsVisitedByFugitive))
         {
@@ -123,6 +129,7 @@ public class Director : MonoBehaviour
             SetMessageBelow("Thank you, lucky stars.");
             gameOver = true;
             LuckyStar.Clear();
+            LuckyStar.Wow();
         }
         else
         {    
