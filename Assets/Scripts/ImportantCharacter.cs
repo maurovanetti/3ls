@@ -14,6 +14,8 @@ public abstract class ImportantCharacter : MonoBehaviour
     private List<ImportantCharacter> otherCharacters; // cache
     private int campsToVisit;
 
+    private float deltaZ;
+
 
     // Use this for initialization
     void Start()
@@ -50,11 +52,15 @@ public abstract class ImportantCharacter : MonoBehaviour
                         }
                     }
                 }
+                deltaZ = UnityEngine.Random.Range(-0.5f, +0.5f);
             }
         }
         else
         {
             t.localPosition = t.localPosition.normalized * (t.localPosition.magnitude - speed);
+            Vector3 newRotation = t.GetChild(0).localRotation.eulerAngles;
+            newRotation.z += deltaZ;
+            t.GetChild(0).localRotation = Quaternion.Euler(newRotation);
         }
         if (speed > 0f)
         {
