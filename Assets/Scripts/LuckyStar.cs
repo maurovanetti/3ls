@@ -7,13 +7,15 @@ public class LuckyStar : RotatingStar {
     private static bool alarmsSet;
     private static bool draggable;
     private static bool byeBye;
-    private static Texture2D hourglassCursorTexture;    
-    
+    private static Texture2D hourglassCursorTexture;
+
     public float springStrength;
+    public AudioClip dragStartSound;
+
     private bool dragged;
-    
     private Rigidbody2D rb;
     private GameObject[] constellation;
+    
 
     // Use this for initialization
     new void Start()
@@ -59,6 +61,10 @@ public class LuckyStar : RotatingStar {
     {
         if (draggable)
         {
+            if (!dragged) // first frame of dragging
+            {
+                GetComponent<AudioSource>().PlayOneShot(dragStartSound);
+            }
             dragged = true;
         }
     }

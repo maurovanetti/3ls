@@ -6,11 +6,14 @@ public class Fire : MonoBehaviour
 {
     public bool on;
     public int framesPerSwitch;
+    public AudioClip ignitionSound;
 
     private SpriteRenderer sr;
     private Transform flame;
     private float flameSize;
     private GameObject smoke;
+    private AudioSource a;
+    private bool previousOn;
 
     // Use this for initialization
     void Start()
@@ -26,6 +29,7 @@ public class Fire : MonoBehaviour
                 flame.localScale = Vector3.zero;
             }
         }
+        a = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -57,5 +61,14 @@ public class Fire : MonoBehaviour
             }
             smoke.SetActive(on);
         }
+
+        if (ignitionSound != null)
+        {
+            if (on && previousOn == false)
+            {
+                a.PlayOneShot(ignitionSound);
+            }
+        }
+        previousOn = on;
     }
 }

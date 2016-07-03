@@ -8,7 +8,8 @@ public abstract class ImportantCharacter : MonoBehaviour
     public float speed;
     public Camp previousCamp;
     public Camp camp;
-    public string iconName;    
+    public string iconName;
+    public AudioClip newCampVisitedSound;
 
     protected Transform t;
     private List<ImportantCharacter> otherCharacters; // cache
@@ -36,6 +37,7 @@ public abstract class ImportantCharacter : MonoBehaviour
             if (!camp.IsVisitedBy(this))
             {
                 camp.Visit(this);
+                OnVisitNewCamp(camp);
                 campsToVisit--;
                 if (campsToVisit == 0)
                 {
@@ -65,6 +67,15 @@ public abstract class ImportantCharacter : MonoBehaviour
         if (speed > 0f)
         {
             CheckCollisions();
+        }
+    }
+
+
+    protected void OnVisitNewCamp(Camp camp)
+    {
+        if (newCampVisitedSound != null)
+        {
+            GetComponent<AudioSource>().PlayOneShot(newCampVisitedSound);
         }
     }
 

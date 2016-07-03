@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class Director : MonoBehaviour
 {
 
+    public AudioClip gameOverSound;
+    public AudioClip victorySound;
+
     public enum PlotEvent
     {
         AllCampsVisitedByEnemy,
@@ -117,6 +120,7 @@ public class Director : MonoBehaviour
     {
         if (IsHappened(EndingEvent.FugitiveCaptured))
         {
+            GetComponent<AudioSource>().PlayOneShot(gameOverSound);
             SetMessageAbove("GAME OVER");
             SetMessageBelow("I'll sell my life dearly!");
             gameOver = true;
@@ -125,6 +129,7 @@ public class Director : MonoBehaviour
         }
         else if (IsHappened(EndingEvent.AllCampsVisitedByFugitive))
         {
+            GetComponent<AudioSource>().PlayOneShot(victorySound);
             SetMessageAbove("LEVEL COMPLETE");
             SetMessageBelow("Thank you, lucky stars.");
             gameOver = true;
