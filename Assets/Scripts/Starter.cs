@@ -13,7 +13,7 @@ public class Starter : MonoBehaviour {
 	void Update () {
         if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
+            SceneManager.LoadScene(3, LoadSceneMode.Single);
         }
 
     }

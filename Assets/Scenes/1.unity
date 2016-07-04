@@ -6922,6 +6922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverSound: {fileID: 8300000, guid: 8f8b4b1fb186fc64e988b44cc2fd87fe, type: 3}
   victorySound: {fileID: 8300000, guid: bfb7484c8ec43804ea2ff1aba5ec6859, type: 3}
+  nextScene: 2
   textAbove: {fileID: 315010294}
   textBelow: {fileID: 1482380878}
 --- !u!82 &1265448186

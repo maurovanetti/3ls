@@ -9,6 +9,7 @@ public class Director : MonoBehaviour
 
     public AudioClip gameOverSound;
     public AudioClip victorySound;
+	public int nextScene;
 
     public enum PlotEvent
     {
@@ -77,7 +78,7 @@ public class Director : MonoBehaviour
     {
         if (gameOver && Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene(0, LoadSceneMode.Single);
+            SceneManager.LoadScene(nextScene, LoadSceneMode.Single);
         }
     }
 
