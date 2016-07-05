@@ -605,7 +605,7 @@ GameObject:
   - 114: {fileID: 194508318}
   - 65: {fileID: 194508321}
   - 82: {fileID: 194508322}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: An Evil Knight
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -2810,6 +2810,10 @@ Prefab:
       propertyPath: m_Name
       value: Miniature of Black Knight
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 249555a05b205a7488224f0d18d70fad, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 249555a05b205a7488224f0d18d70fad, type: 3}
   m_IsPrefabParent: 0
@@ -2941,7 +2945,7 @@ GameObject:
   - 114: {fileID: 738328045}
   - 65: {fileID: 738328048}
   - 82: {fileID: 738328049}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: The Fugitive
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -6922,7 +6926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverSound: {fileID: 8300000, guid: 8f8b4b1fb186fc64e988b44cc2fd87fe, type: 3}
   victorySound: {fileID: 8300000, guid: bfb7484c8ec43804ea2ff1aba5ec6859, type: 3}
-  nextScene: 2
+  nextScene: 0
   textAbove: {fileID: 315010294}
   textBelow: {fileID: 1482380878}
 --- !u!82 &1265448186
@@ -10463,6 +10467,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[8]
       value: 
       objectReference: {fileID: 2100000, guid: 0647b4bc2110e01409e823518a840713, type: 2}
+    - target: {fileID: 100000, guid: 249555a05b205a7488224f0d18d70fad, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 249555a05b205a7488224f0d18d70fad, type: 3}
   m_IsPrefabParent: 0
@@ -10898,6 +10906,10 @@ Prefab:
       propertyPath: m_Name
       value: Miniature of the Fugitive
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 248b5f227e678824b9423559f2b1551f, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 248b5f227e678824b9423559f2b1551f, type: 3}
   m_IsPrefabParent: 0
@@ -11269,7 +11281,7 @@ GameObject:
   - 114: {fileID: 2065815809}
   - 65: {fileID: 2065815811}
   - 82: {fileID: 2065815812}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Another Evil Knight
   m_TagString: Character
   m_Icon: {fileID: 0}

@@ -124,6 +124,7 @@ public class Director : MonoBehaviour
             GetComponent<AudioSource>().PlayOneShot(gameOverSound);
             SetMessageAbove("GAME OVER");
             SetMessageBelow("I'll sell my life dearly!");
+            nextScene = SceneManager.GetActiveScene().buildIndex;
             gameOver = true;
             LuckyStar.Clear();
             LuckyStar.ByeBye();
